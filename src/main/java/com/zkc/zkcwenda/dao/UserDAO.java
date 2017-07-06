@@ -1,23 +1,31 @@
 package com.zkc.zkcwenda.dao;
 
 import com.zkc.zkcwenda.model.User;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
+import org.apache.ibatis.annotations.Insert;
 
 /**
  * Created by zkc on 17/6/28.
  */
-@Repository
 @Mapper
 public interface UserDAO {
-    String TABLE_NAME = " user ";
-    String INSERT_FILEDS = " name, password, salt, headUrl ";
-    String SELECT_FIELDS = "id," + INSERT_FILEDS;
+    String TABLE_NAME = "user";
+    String INSET_FIELDS = " name, password, salt, head_url ";
+    String SELECT_FIELDS = " id, name, password, salt, head_url";
 
-    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FILEDS,
+    @Insert({"insert into ", TABLE_NAME, "(", INSET_FIELDS,
             ") values (#{name},#{password},#{salt},#{headUrl})"})
     int addUser(User user);
 
+   /* @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})
+    User selectById(int id);
+
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where name=#{name}"})
+    User selectByName(String name);
+
+    @Update({"update ", TABLE_NAME, " set password=#{password} where id=#{id}"})
+    void updatePassword(User user);
+
+    @Delete({"delete from ", TABLE_NAME, " where id=#{id}"})
+    void deleteById(int id);*/
 }

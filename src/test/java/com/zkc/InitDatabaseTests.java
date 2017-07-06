@@ -1,5 +1,6 @@
-package com.zkc.zkcwenda;
+package com.zkc;
 
+import com.zkc.zkcwenda.ZkcwendaApplication;
 import com.zkc.zkcwenda.dao.UserDAO;
 import com.zkc.zkcwenda.model.User;
 import org.junit.Test;
@@ -8,17 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ZkcwendaApplication.class)
-@WebAppConfiguration
 @Sql("/init-schema.sql")
+
 public class InitDatabaseTests {
 	@Autowired
 	UserDAO userDAO;
+
 	@Test
 	public void initDatabase() {
 		Random random = new Random();
