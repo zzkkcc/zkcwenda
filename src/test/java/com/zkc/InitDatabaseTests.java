@@ -1,8 +1,11 @@
 package com.zkc;
 
 import com.zkc.zkcwenda.ZkcwendaApplication;
+import com.zkc.zkcwenda.dao.QuestionDAO;
 import com.zkc.zkcwenda.dao.UserDAO;
+import com.zkc.zkcwenda.model.Question;
 import com.zkc.zkcwenda.model.User;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,6 +23,8 @@ import java.util.Random;
 public class InitDatabaseTests {
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	QuestionDAO questionDAO;
 
 	@Test
 	public void initDatabase() {
@@ -30,6 +36,20 @@ public class InitDatabaseTests {
 			user.setPassword("");
 			user.setSalt("");
 			userDAO.addUser(user);
-		}
+			user.setPassword("xx") ;
+			userDAO.updatePassword(user);
+            Question question = new Question();
+            question.setCommentCount(i);
+            Date date = new Date();
+            date.setTime(date.getTime() + 1000 * 3600 * i);
+            question.setCreatedDate(date);
+            question.setUserId(i + 1);
+            question.setTitle(String.format("TITLE{%d}", i));
+            question.setContent(String.format("actually, I don't know the answer %d", i));
+            questionDAO.addQuestion(question);
+        }
+		Assert.assertEquals("xx", userDAO.selectById(1).getPassword());
+		userDAO.deleteById(1);
+		Assert.assertNull(userDAO.selectById(1));
 	}
 }
