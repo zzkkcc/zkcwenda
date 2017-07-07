@@ -26,13 +26,13 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     WendaService wendaService = new WendaService();
-    @RequestMapping(path={"/","/index"})
+    /*@RequestMapping(path={"/","/index"})
     @ResponseBody
     public String index()
     {
         //model.addAttribute("User" new User("LEEE"))
         return "Hello zkc";
-    }
+    }*/
 
     @RequestMapping(path={"/profile/{group}/{userID}"})
     @ResponseBody
