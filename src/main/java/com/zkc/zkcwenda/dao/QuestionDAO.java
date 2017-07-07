@@ -4,7 +4,6 @@ import com.zkc.zkcwenda.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
-
 /**
  * Created by zkc on 17/6/28.
  */

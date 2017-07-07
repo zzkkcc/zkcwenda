@@ -32,5 +32,4 @@ public class InitDatabaseTests {
 			userDAO.addUser(user);
 		}
 	}
-
 }

@@ -1,8 +1,11 @@
 package com.zkc.zkcwenda.dao;
 
 import com.zkc.zkcwenda.model.User;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * Created by zkc on 17/6/28.
@@ -17,7 +20,7 @@ public interface UserDAO {
             ") values (#{name},#{password},#{salt},#{headUrl})"})
     int addUser(User user);
 
-   /* @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})
     User selectById(int id);
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where name=#{name}"})
@@ -27,5 +30,5 @@ public interface UserDAO {
     void updatePassword(User user);
 
     @Delete({"delete from ", TABLE_NAME, " where id=#{id}"})
-    void deleteById(int id);*/
+    void deleteById(int id);
 }
