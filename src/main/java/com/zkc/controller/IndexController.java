@@ -1,6 +1,8 @@
 package com.zkc.controller;
 
 import com.zkc.service.WendaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +24,9 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by zkc on 17/6/5.
  */
-@Controller
+//@Controller
 public class IndexController {
-
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     WendaService wendaService = new WendaService();
     /*@RequestMapping(path={"/","/index"})
     @ResponseBody
@@ -54,7 +56,7 @@ public class IndexController {
         }
         model.addAttribute("map", map);
         model.addAttribute("user",new User("LEE"));
-        return "home";
+        return "index";
     }
     @RequestMapping(path={"/request"}, method = {RequestMethod.GET})
     @ResponseBody
