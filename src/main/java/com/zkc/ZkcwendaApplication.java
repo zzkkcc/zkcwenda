@@ -1,4 +1,4 @@
-package com.zkc.zkcwenda;
+package com.zkc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

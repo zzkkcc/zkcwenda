@@ -1,9 +1,9 @@
-package com.zkc.zkcwenda.controller;
+package com.zkc.controller;
 
-import com.zkc.zkcwenda.model.Question;
-import com.zkc.zkcwenda.service.QuestionService;
-import com.zkc.zkcwenda.service.UserService;
-import com.zkc.zkcwenda.service.ViewObject;
+import com.zkc.model.Question;
+import com.zkc.service.QuestionService;
+import com.zkc.service.UserService;
+import com.zkc.service.ViewObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

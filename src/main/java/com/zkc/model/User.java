@@ -1,4 +1,4 @@
-package com.zkc.zkcwenda.model;
+package com.zkc.model;
 
 /**
  * Created by zkc on 17/6/27.

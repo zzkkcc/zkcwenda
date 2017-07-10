@@ -1,6 +1,6 @@
-package com.zkc.zkcwenda.dao;
+package com.zkc.dao;
 
-import com.zkc.zkcwenda.model.User;
+import com.zkc.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

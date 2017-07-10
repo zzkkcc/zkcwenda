@@ -1,6 +1,6 @@
-package com.zkc.zkcwenda.controller;
+package com.zkc.controller;
 
-import com.zkc.zkcwenda.service.WendaService;
+import com.zkc.service.WendaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 
-import com.zkc.zkcwenda.model.User;
+import com.zkc.model.User;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

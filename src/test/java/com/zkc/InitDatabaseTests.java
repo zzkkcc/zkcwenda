@@ -1,10 +1,9 @@
 package com.zkc;
 
-import com.zkc.zkcwenda.ZkcwendaApplication;
-import com.zkc.zkcwenda.dao.QuestionDAO;
-import com.zkc.zkcwenda.dao.UserDAO;
-import com.zkc.zkcwenda.model.Question;
-import com.zkc.zkcwenda.model.User;
+import com.zkc.dao.QuestionDAO;
+import com.zkc.dao.UserDAO;
+import com.zkc.model.Question;
+import com.zkc.model.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,5 +50,6 @@ public class InitDatabaseTests {
 		Assert.assertEquals("xx", userDAO.selectById(1).getPassword());
 		userDAO.deleteById(1);
 		Assert.assertNull(userDAO.selectById(1));
+		//System.out.print(questionDAO.selectLatestQuestions(0,0,10));
 	}
 }

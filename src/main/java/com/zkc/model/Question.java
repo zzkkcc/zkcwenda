@@ -1,4 +1,4 @@
-package com.zkc.zkcwenda.model;
+package com.zkc.model;
 
 import java.util.Date;
 

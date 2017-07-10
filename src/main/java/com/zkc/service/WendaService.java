@@ -1,4 +1,4 @@
-package com.zkc.zkcwenda.service;
+package com.zkc.service;
 
 /**
  * Created by zkc on 17/6/28.

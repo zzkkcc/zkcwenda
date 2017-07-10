@@ -1,6 +1,5 @@
 package com.zkc;
 
-import com.zkc.zkcwenda.ZkcwendaApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;

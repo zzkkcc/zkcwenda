@@ -1,7 +1,7 @@
-package com.zkc.zkcwenda.service;
+package com.zkc.service;
 
-import com.zkc.zkcwenda.dao.UserDAO;
-import com.zkc.zkcwenda.model.User;
+import com.zkc.dao.UserDAO;
+import com.zkc.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
