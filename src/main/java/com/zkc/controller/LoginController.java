@@ -21,7 +21,7 @@ public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     @Autowired
     UserService userService;
-    @RequestMapping(path={"/reg"}, method = {RequestMethod.POST})
+    @RequestMapping(path={"/reg/"}, method = {RequestMethod.POST})
     public String index(Model model,
                         @RequestParam("username") String username,
                         @RequestParam("password") String password) {
