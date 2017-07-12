@@ -37,7 +37,7 @@ public class HomeController {
     @RequestMapping(path={"/","/index"}, method = {RequestMethod.GET})
     public String index(Model model)
     {
-        model.addAttribute("vos",getQuestions(0,0,10));
+        model.addAttribute("vos", getQuestions(0,0,10));
         return "index";
     }
 
