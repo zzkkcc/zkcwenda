@@ -1,5 +1,6 @@
 package com.zkc.controller;
 
+import com.zkc.model.HostHolder;
 import com.zkc.model.Question;
 import com.zkc.service.QuestionService;
 import com.zkc.service.UserService;
@@ -27,6 +28,8 @@ public class HomeController {
     UserService userService;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    HostHolder hostHolder;
 
     @RequestMapping(path={"/user/{userId}"}, method = {RequestMethod.GET})
     public String index(Model model, @PathVariable("userId") int userId) {
@@ -38,6 +41,7 @@ public class HomeController {
     public String index(Model model)
     {
         model.addAttribute("vos", getQuestions(0,0,10));
+        hostHolder.getUser();
         return "index";
     }
 
