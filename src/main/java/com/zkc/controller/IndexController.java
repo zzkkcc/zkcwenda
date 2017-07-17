@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
  */
 //@Controller
 public class IndexController {
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     WendaService wendaService = new WendaService();
     /*@RequestMapping(path={"/","/index"})
     @ResponseBody
