@@ -1,7 +1,7 @@
 package com.zkc.controller;
 
-import com.zkc.model.HostHolder;
-import com.zkc.model.Question;
+import com.zkc.model.*;
+import com.zkc.service.CommentService;
 import com.zkc.service.QuestionService;
 import com.zkc.service.UserService;
 import com.zkc.util.WendaUtil;
@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zkc on 17/7/14.
@@ -25,6 +27,8 @@ public class QuestionController {
     HostHolder hostHolder;
     @Autowired
     UserService userService;
+    @Autowired
+    CommentService commentService;
     private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     @RequestMapping(value = "/question/add", method = RequestMethod.POST)
@@ -55,6 +59,16 @@ public class QuestionController {
         Question question = questionService.selectById(qid);
         model.addAttribute("question", question);
         model.addAttribute("user", userService.getUser(question.getUserId()));
+
+        List<Comment> commentList = commentService.getCommentByEntity(qid, EntityType.ENTITY_QUESTION);
+        List<ViewObject> comments = new ArrayList<ViewObject>();
+        for(Comment comment:commentList){
+            ViewObject vo = new ViewObject();
+            vo.set("comment", comment);
+            vo.set("user", userService.getUser(comment.getUserId()));
+            comments.add(vo);
+        }
+        model.addAttribute("comments", comments);
         return "detail";
     }
 }

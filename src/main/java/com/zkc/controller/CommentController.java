@@ -4,6 +4,7 @@ import com.zkc.model.Comment;
 import com.zkc.model.EntityType;
 import com.zkc.model.HostHolder;
 import com.zkc.service.CommentService;
+import com.zkc.service.QuestionService;
 import com.zkc.util.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ public class CommentController {
     CommentService commentService;
     @Autowired
     HostHolder hostHolder;
+    @Autowired
+    QuestionService questionService;
 
     @RequestMapping(path={"/addComment"}, method = {RequestMethod.POST})
     public String addComment(@RequestParam("questionId") int questionId,
@@ -41,6 +44,9 @@ public class CommentController {
             comment.setEntityType(EntityType.ENTITY_QUESTION);
             comment.setEntityId(questionId);
             commentService.addComment(comment);
+            int count = commentService.getCommentCount(comment.getEntityId(), comment.getEntityType());
+            questionService.updateCommentCount(comment.getEntityId(), count);
+
         }catch (Exception e){
             logger.error("failed to add comment" + e.getMessage());
         }
