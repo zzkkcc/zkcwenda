@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.swing.text.View;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zkc on 17/7/18.
@@ -36,6 +39,19 @@ public class MessageController {
     @RequestMapping(path={"/msg/detail"}, method = {RequestMethod.GET})
     public String getConversationDetail(Model model,
                                         @RequestParam("conversationId") String conversationId){
+        try{
+            List<Message> messageList = messageService.getConversationDetail(conversationId,0,10);
+            List<ViewObject> messages = new ArrayList<ViewObject>();
+            for(Message message: messageList){
+                ViewObject vo = new ViewObject();
+                vo.set("message", message);
+                vo.set("user", userService.getUser(message.getFromId()));
+                messages.add(vo);
+            }
+            model.addAttribute("messages",messages);
+        }catch (Exception e){
+            logger.error("failed to get details"+e.getMessage());
+        }
         return "letterDetail";
     }
     @RequestMapping(path={"/msg/addMessage"}, method = {RequestMethod.POST})
