@@ -27,5 +27,15 @@ public interface MessageDAO {
                                         @Param("offset") int offset,
                                         @Param("limit") int limit);
 
+    //select *, count(id) as id || from (select * from wenda.message order by created_date desc) tt group by conversation_id order by created_date desc limit 0, 2;
+    //@Select({"select ", INSERT_FIELDS," , count(id) as id from( select * from ",TABLE_NAME,
+    //        "where from_id=#{userId} or to_id=#{userId} order by created_date desc) tt group by conversation_id order by created_date desc limit #{offset}, #{limit}"})
+    @Select({"select message.*,tt.cnt from message,( select conversation_id,count(id) as cnt from " +
+            "message group by conversation_id) tt where created_date in (select max(created_date) from " +
+            "message group by conversation_id) and message.conversation_id=tt.conversation_id order " +
+            "by created_date desc"})
+    List<Message> getConversationList(@Param("userId") int userId,
+                                        @Param("offset") int offset,
+                                       @Param("limit") int limit);
 
 }

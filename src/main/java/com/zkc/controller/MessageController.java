@@ -33,7 +33,21 @@ public class MessageController {
     UserService userService;
 
     @RequestMapping(path={"/msg/list"}, method = {RequestMethod.GET})
-    public String getConversationList(){
+    public String getConversationList(Model model){
+        if(hostHolder.getUser() == null){
+            return "redirect:/relogin";
+        }
+        int localUserId = hostHolder.getUser().getId();
+        List<Message> conversationList = messageService.getConversationList(localUserId, 0, 5);
+        List<ViewObject> conversations = new ArrayList<ViewObject>();
+        for(Message message: conversationList){
+            ViewObject vo = new ViewObject();
+            vo.set("message", message);
+            int targetId = message.getFromId() == localUserId ? message.getToId() : message.getFromId();
+            vo.set("user", userService.getUser(targetId));
+            conversations.add(vo);
+        }
+        model.addAttribute("conversations",conversations);
         return "letter";
     }
     @RequestMapping(path={"/msg/detail"}, method = {RequestMethod.GET})
