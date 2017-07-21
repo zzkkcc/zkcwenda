@@ -2,6 +2,7 @@ package com.zkc.controller;
 
 import com.zkc.model.*;
 import com.zkc.service.CommentService;
+import com.zkc.service.LikeService;
 import com.zkc.service.QuestionService;
 import com.zkc.service.UserService;
 import com.zkc.util.WendaUtil;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @Controller
 public class QuestionController {
+    private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
     @Autowired
     QuestionService questionService;
     @Autowired
@@ -29,7 +31,8 @@ public class QuestionController {
     UserService userService;
     @Autowired
     CommentService commentService;
-    private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
+    @Autowired
+    LikeService likeService;
 
     @RequestMapping(value = "/question/add", method = RequestMethod.POST)
     @ResponseBody
@@ -65,6 +68,13 @@ public class QuestionController {
         for(Comment comment:commentList){
             ViewObject vo = new ViewObject();
             vo.set("comment", comment);
+            if(hostHolder.getUser() == null){
+                vo.set("liked", 0);
+            }else {
+                vo.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(),
+                        EntityType.ENTITY_COMMENT, comment.getId()));
+            }
+            vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
             vo.set("user", userService.getUser(comment.getUserId()));
             comments.add(vo);
         }
