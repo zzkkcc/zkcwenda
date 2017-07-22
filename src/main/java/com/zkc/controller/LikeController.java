@@ -1,7 +1,12 @@
 package com.zkc.controller;
 
+import com.zkc.async.EventModel;
+import com.zkc.async.EventProducer;
+import com.zkc.async.EventType;
+import com.zkc.model.Comment;
 import com.zkc.model.EntityType;
 import com.zkc.model.HostHolder;
+import com.zkc.service.CommentService;
 import com.zkc.service.LikeService;
 import com.zkc.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +25,10 @@ public class LikeController {
     HostHolder hostHolder;
     @Autowired
     LikeService likeService;
+    @Autowired
+    EventProducer eventProducer;
+    @Autowired
+    CommentService commentService;
 
     @RequestMapping(path = {"/like"}, method = {RequestMethod.POST})
     @ResponseBody
@@ -27,6 +36,13 @@ public class LikeController {
         if(hostHolder.getUser() == null){
             return WendaUtil.getJSONString(999);
         }
+        Comment comment = commentService.getCommentById(commentId);
+
+        eventProducer.fileEvent(new EventModel(EventType.LIKE)
+        .setActorId(hostHolder.getUser().getId()).setEntityId(commentId)
+        .setEntityType(EntityType.ENTITY_COMMENT).setEntityOwnerId(comment.getUserId())
+        .setExt("questionId", String.valueOf(comment.getEntityId())));
+
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId);
         return WendaUtil.getJSONString(0, String.valueOf(likeCount));
     }
