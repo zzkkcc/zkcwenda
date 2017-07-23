@@ -1,5 +1,8 @@
 package com.zkc.controller;
 
+import com.zkc.async.EventModel;
+import com.zkc.async.EventProducer;
+import com.zkc.async.EventType;
 import com.zkc.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -21,9 +24,12 @@ import java.util.Map;
  */
 @Controller
 public class LoginController {
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     UserService userService;
+    @Autowired
+    EventProducer eventProducer;
+
     @RequestMapping(path={"/reg/"}, method = {RequestMethod.POST})
     public String reg(Model model,
                         @RequestParam("username") String username,
@@ -31,7 +37,7 @@ public class LoginController {
                         @RequestParam(value = "next", required = false) String next,
                         HttpServletResponse response) {
         try {
-            Map<String, String> map = userService.register(username, password);
+            Map<String, Object> map = userService.register(username, password);
             if (map.containsKey("ticket")) {
                 Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
                 cookie.setPath("/");
@@ -57,11 +63,14 @@ public class LoginController {
                         @RequestParam(value = "rememberme", defaultValue = "false") boolean rememberme,
                         HttpServletResponse response) {
         try {
-            Map<String, String> map = userService.login(username, password);
+            Map<String, Object> map = userService.login(username, password);
             if (map.containsKey("ticket")) {
-                Cookie cookie = new Cookie("ticket", map.get("ticket"));
+                Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
                 cookie.setPath("/");
                 response.addCookie(cookie);
+                eventProducer.fileEvent(new EventModel(EventType.LOGIN).setExt("username", username)
+                        .setExt("email", "kaichenz@usc.edu")
+                        .setActorId((int)map.get("userId")));
                 if(StringUtils.isNotBlank(next)){
                     return "redirect:" + next;
                 }

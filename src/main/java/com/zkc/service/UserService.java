@@ -6,6 +6,8 @@ import com.zkc.model.LoginTicket;
 import com.zkc.model.User;
 import com.zkc.util.WendaUtil;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.*;
  */
 @Service
 public class UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserDAO userDAO;
     @Autowired
@@ -24,8 +27,8 @@ public class UserService {
     public User selectByName(String name){
         return userDAO.selectByName(name);
     }
-    public Map<String, String> register(String username, String password){
-        Map<String, String> map = new HashMap<String, String>();
+    public Map<String, Object> register(String username, String password){
+        Map<String, Object> map = new HashMap<String, Object>();
         if(StringUtils.isBlank(username)){
             map.put("msg","username cannot be empty");
             return map;
@@ -46,10 +49,13 @@ public class UserService {
                 new Random().nextInt(1000)));
         user.setPassword(WendaUtil.MD5(password + user.getSalt()));
         userDAO.addUser(user);
+
+        String ticket = addLoginTicket(user.getId());
+        map.put("ticket", ticket);
         return map;
     }
-    public Map<String, String> login(String username, String password){
-        Map<String, String> map = new HashMap<String, String>();
+    public Map<String, Object> login(String username, String password){
+        Map<String, Object> map = new HashMap<String, Object>();
         if(StringUtils.isBlank(username)){
             map.put("msg","username cannot be empty");
             return map;
@@ -69,6 +75,7 @@ public class UserService {
         }
         String ticket = addLoginTicket(user.getId());
         map.put("ticket",ticket);
+        map.put("userId",user.getId());
         return map;
     }
     public String addLoginTicket(int userId){
