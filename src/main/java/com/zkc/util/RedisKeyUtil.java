@@ -8,6 +8,8 @@ public class RedisKeyUtil {
     private static String BIZ_LIKE = "LIKE";
     private static String BIZ_DISLIKE = "DISLIKE";
     private static String BIZ_EVENTQUEUE = "EVENT_QUEUE";
+    private static String BIZ_FOLLER = "FOLLOWER";
+    private static String BIZ_FOLLEE = "FOLLOWEE";
 
     public static String getLikeKey(int entityType, int entityId){
         return BIZ_LIKE + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
@@ -18,5 +20,11 @@ public class RedisKeyUtil {
     }
     public static String getEventQueueKey(){
         return BIZ_EVENTQUEUE;
+    }
+    public static String getFollowerKey(int entityType, int entityId){
+        return BIZ_FOLLER + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
+    }
+    public static String getFolloweeKey(int userId, int entityType){
+        return BIZ_FOLLEE + SPLIT + String.valueOf(userId) + SPLIT + String.valueOf(entityType);
     }
 }

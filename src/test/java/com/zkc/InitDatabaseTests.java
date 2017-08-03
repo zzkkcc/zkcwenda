@@ -2,8 +2,10 @@ package com.zkc;
 
 import com.zkc.dao.QuestionDAO;
 import com.zkc.dao.UserDAO;
+import com.zkc.model.EntityType;
 import com.zkc.model.Question;
 import com.zkc.model.User;
+import com.zkc.service.FollowService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +26,8 @@ public class InitDatabaseTests {
 	UserDAO userDAO;
 	@Autowired
 	QuestionDAO questionDAO;
+	@Autowired
+	FollowService followService;
 
 	@Test
 	public void initDatabase() {
@@ -37,6 +41,10 @@ public class InitDatabaseTests {
 			userDAO.addUser(user);
 			user.setPassword("xx") ;
 			userDAO.updatePassword(user);
+
+			for(int j = 1; j < i; j++){
+				followService.follow(j, EntityType.ENTITY_USER, i);
+			}
             Question question = new Question();
             question.setCommentCount(i);
             Date date = new Date();

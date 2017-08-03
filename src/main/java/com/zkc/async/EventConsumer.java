@@ -23,11 +23,11 @@ import java.util.Map;
 @Service
 public class EventConsumer implements InitializingBean, ApplicationContextAware{
     private static final Logger logger = LoggerFactory.getLogger(EventConsumer.class);
+    private Map<EventType, List<EventHandler>> config = new HashMap<EventType, List<EventHandler>>();
+    private ApplicationContext applicationContext;
+
     @Autowired
     JedisAdapter jedisAdapter;
-    private Map<EventType, List<EventHandler>> config =
-            new HashMap<EventType, List<EventHandler>>();
-    private ApplicationContext applicationContext;
 
     @Override
     public void afterPropertiesSet() throws Exception {
