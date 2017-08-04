@@ -1,5 +1,8 @@
 package com.zkc.controller;
 
+import com.zkc.async.EventModel;
+import com.zkc.async.EventProducer;
+import com.zkc.async.EventType;
 import com.zkc.model.Comment;
 import com.zkc.model.EntityType;
 import com.zkc.model.HostHolder;
@@ -28,6 +31,8 @@ public class CommentController {
     HostHolder hostHolder;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    EventProducer eventProducer;
 
     @RequestMapping(path={"/addComment"}, method = {RequestMethod.POST})
     public String addComment(@RequestParam("questionId") int questionId,
@@ -44,8 +49,12 @@ public class CommentController {
             comment.setEntityType(EntityType.ENTITY_QUESTION);
             comment.setEntityId(questionId);
             commentService.addComment(comment);
+
             int count = commentService.getCommentCount(comment.getEntityId(), comment.getEntityType());
             questionService.updateCommentCount(comment.getEntityId(), count);
+
+            eventProducer.fileEvent(new EventModel(EventType.COMMENT).setActorId(comment.getUserId())
+            .setEntityId(questionId));
 
         }catch (Exception e){
             logger.error("failed to add comment" + e.getMessage());
