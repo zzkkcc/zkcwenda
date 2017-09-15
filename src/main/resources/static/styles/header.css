@@ -1,0 +1,34 @@
+body.zhi {
+    padding-top: 46px;
+    _padding-top: 64px;
+    -webkit-font-smoothing: subpixel-antialiased
+}
+
+.zu-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    width: 100%;
+    height: 45px;
+    background: #3d444c;
+}
+
+.zu-top .zg-wrap {
+    position: relative;
+    height: inherit
+}
+
+.zu-top-link-logo {
+    float: left;
+    background: #FFFFFF;
+    color: #333C4D;
+    border-radius: 50%;
+    margin-right: 20px;
+    margin-left: 3px;
+    margin-top: 2px;
+    padding-left: 8px;
+    padding-top: 6px;
+    height: 35px;
+    width: 35px;
+}
