@@ -55,9 +55,9 @@ public class QuestionController {
         }catch (Exception e){
             logger.error("fail to add title" + e.getMessage());
         }
-        return "";
+        return WendaUtil.getJSONString(1, "failed");
     }
-    @RequestMapping(value = "/question/{qid}")
+    @RequestMapping(value = "/question/{qid}", method = {RequestMethod.GET})
     public String questionDetail(@PathVariable("qid") int qid, Model model){
         Question question = questionService.selectById(qid);
         model.addAttribute("question", question);

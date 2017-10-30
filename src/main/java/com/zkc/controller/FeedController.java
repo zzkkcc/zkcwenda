@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by zkc on 17/8/4.
  */
@@ -27,13 +28,10 @@ public class FeedController {
 
     @Autowired
     FeedService feedService;
-
     @Autowired
     FollowService followService;
-
     @Autowired
     HostHolder hostHolder;
-
     @Autowired
     JedisAdapter jedisAdapter;
 

@@ -22,7 +22,7 @@ public class FollowService {
 
     public boolean follow(int userId, int entityType, int entityId){
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
-        String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
+        String followeeKey = RedisKeyUtil.getFolloweeKey(entityType, userId);
         Date date = new Date();
         Jedis jedis = jedisAdapter.getJedis();
         Transaction tx = jedisAdapter.multi(jedis);
@@ -33,7 +33,7 @@ public class FollowService {
     }
     public boolean unfollow(int userId, int entityType, int entityId){
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
-        String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
+        String followeeKey = RedisKeyUtil.getFolloweeKey(entityType, userId);
         Jedis jedis = jedisAdapter.getJedis();
         Transaction tx = jedisAdapter.multi(jedis);
         tx.zrem(followerKey, String.valueOf(userId));
@@ -43,12 +43,12 @@ public class FollowService {
     }
     public List<Integer> getFollowers(int entityType, int entityId, int count){
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
-        return getIdsFromSet(jedisAdapter.zrange(followerKey, 0, count));
+        return getIdsFromSet(jedisAdapter.zrevrange(followerKey, 0, count));
 
     }
     public List<Integer> getFollowers(int entityType, int entityId, int offset, int count){
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
-        return getIdsFromSet(jedisAdapter.zrange(followerKey, offset, count));
+        return getIdsFromSet(jedisAdapter.zrevrange(followerKey, offset, offset + count));
 
     }
     public List<Integer> getFollowees(int entityType, int entityId, int count){
@@ -58,7 +58,7 @@ public class FollowService {
     }
     public List<Integer> getFollowees(int entityType, int entityId, int offset, int count){
         String followeeKey = RedisKeyUtil.getFolloweeKey(entityType, entityId);
-        return getIdsFromSet(jedisAdapter.zrevrange(followeeKey, offset, count));
+        return getIdsFromSet(jedisAdapter.zrevrange(followeeKey, offset, offset + count));
 
     }
     private List<Integer> getIdsFromSet(Set<String> idset){

@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-
 /**
  * Created by zkc on 17/7/5.
  */
@@ -19,8 +18,6 @@ public interface QuestionDAO {
             ") values (#{title},#{content},#{createdDate},#{userId},#{commentCount})"})
     int addQuestion(Question question);
 
-    @Select({"select ", SELECT_FIELDS," from ",TABLE_NAME," where id=#{id}"})
-    Question selectById(int id);
     List<Question> selectLatestQuestions(@Param("userId") int userId,
                                             @Param("offset") int offset,
                                             @Param("limit") int limit);

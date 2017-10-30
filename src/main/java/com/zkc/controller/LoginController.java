@@ -35,6 +35,7 @@ public class LoginController {
                         @RequestParam("username") String username,
                         @RequestParam("password") String password,
                         @RequestParam(value = "next", required = false) String next,
+                        @RequestParam(value="rememberme", defaultValue = "false") boolean rememberme,
                         HttpServletResponse response) {
         try {
             Map<String, Object> map = userService.register(username, password);
@@ -42,14 +43,17 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
                 cookie.setPath("/");
                 response.addCookie(cookie);
+                if (rememberme) {
+                    cookie.setMaxAge(3600*24*5);
+                }
                 if(StringUtils.isNotBlank(next)){
                     return "redirect:" + next;
                 }
                 return "redirect:/";
             }else{
                 model.addAttribute("msg", map.get("msg"));
+                return "login";
             }
-            return "login";
         }catch (Exception e){
             logger.error("error registration" + e.getMessage());
             return "login";
@@ -75,10 +79,10 @@ public class LoginController {
                     return "redirect:" + next;
                 }
                 return "redirect:/";
-            }else{
+            }else {
                 model.addAttribute("msg", map.get("msg"));
+                return "login";
             }
-            return "login";
         }catch (Exception e){
             logger.error("error registration" + e.getMessage());
             return "login";
@@ -90,7 +94,7 @@ public class LoginController {
         model.addAttribute("next", next);
         return "login";
     }
-    @RequestMapping(path={"/logout"}, method = {RequestMethod.GET})
+    @RequestMapping(path={"/logout"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String logout(@CookieValue("ticket") String ticket){
         userService.logout(ticket);
         return "redirect:/";

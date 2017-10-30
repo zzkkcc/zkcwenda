@@ -44,7 +44,7 @@ public class HomeController {
         vo.set("user", user);
         vo.set("commentCount", commentService.getUserCommentCount(userId));
         vo.set("followerCount", followService.getFollowerCount(EntityType.ENTITY_USER, userId));
-        vo.set("followeeCount", followService.getFolloweeCount(userId, EntityType.ENTITY_USER));
+        vo.set("followeeCount", followService.getFolloweeCount(EntityType.ENTITY_USER, userId));
         if (hostHolder.getUser() != null) {
             vo.set("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_USER, userId));
         } else {
@@ -68,8 +68,8 @@ public class HomeController {
         for(Question question : questionList){
             ViewObject vo = new ViewObject();
             vo.set("question", question);
-            vo.set("user", userService.getUser(question.getUserId()));
             vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
+            vo.set("user", userService.getUser(question.getUserId()));
             vos.add(vo);
         }
         return vos;

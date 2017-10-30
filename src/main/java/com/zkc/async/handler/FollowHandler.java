@@ -32,6 +32,7 @@ public class FollowHandler implements EventHandler{
         message.setToId(model.getEntityOwnerId());
         message.setCreatedDate(new Date());
         User user = userService.getUser(model.getActorId());
+
         if(model.getEntityType() == EntityType.ENTITY_QUESTION) {
             message.setContent("User " + user.getName() + " pay attention" +
                     " to your questions, http://127.0.0.1:8080/question/" + model.getEntityId());

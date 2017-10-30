@@ -57,7 +57,7 @@ public class CommentController {
             .setEntityId(questionId));
 
         }catch (Exception e){
-            logger.error("failed to add comment" + e.getMessage());
+            logger.error("failed to add comment " + e.getMessage());
         }
         return "redirect:/question/"+questionId;
     }

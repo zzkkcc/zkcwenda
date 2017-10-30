@@ -137,6 +137,7 @@ public class JedisAdapter implements InitializingBean{
             return tx.exec();
         }catch (Exception e){
             logger.error("Exception occurs" + e.getMessage());
+            tx.discard();
         }finally {
             if( tx != null){
                 try{

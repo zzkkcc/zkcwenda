@@ -25,7 +25,7 @@ public class RedisKeyUtil {
     public static String getFollowerKey(int entityType, int entityId){
         return BIZ_FOLLER + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
     }
-    public static String getFolloweeKey(int userId, int entityType){
+    public static String getFolloweeKey(int entityType, int userId){
         return BIZ_FOLLEE + SPLIT + String.valueOf(userId) + SPLIT + String.valueOf(entityType);
     }
     public static String getTimelineKey(int userId){
